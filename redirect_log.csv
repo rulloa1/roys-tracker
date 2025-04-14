@@ -1,0 +1,11 @@
+$redirFile = fopen("redirect_log.csv", "a");
+fputcsv($redirFile, [
+  $data['fingerprint'],
+  $data['ip'],
+  $data['screen'],
+  $data['lang'],
+  $data['referrer'],
+  $data['timezone'],
+  $data['logged_at']
+]);
+fclose($redirFile);
