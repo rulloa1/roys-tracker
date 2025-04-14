@@ -7,8 +7,13 @@ $data['logged_at'] = date("Y-m-d H:i:s");
 $redirected = $data['redirected'] ?? false;
 
 if ($redirected) {
-    sendToTelegram("🌀 *Redirected Visitor*\n"
-      . "🧠 FP: `{$data['fingerprint']}`\n"
-      . "📍 IP: `{$data['ip']}`\n"
-      . "⏱ Time: `{$data['logged_at']}`");
+    $msg = "🌀 *Redirected Visitor*\n"
+         . "🧠 FP: `{$data['fingerprint']}`\n"
+         . "📍 IP: `{$data['ip']}`\n"
+         . "🧭 TZ: `{$data['timezone']}` | Lang: `{$data['lang']}`\n"
+         . "📱 Screen: {$data['screen']}\n"
+         . "↩️ Referrer: " . ($data['referrer'] ?? 'Direct') . "\n"
+         . "⏱ Time: `{$data['logged_at']}`";
+
+    sendToTelegram($msg);
 }
